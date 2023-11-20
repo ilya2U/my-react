@@ -48,8 +48,9 @@ function App () {
             
             <MyButton style={{borderRight:0}} onClick={fetchPosts}>GetPosts</MyButton>
             <MyButton style={{marginTop:30}} onClick={()=>setModal(true)}>
-                Создать пользователя
+                    Создать пользователя
             </MyButton>
+            
             <MyModal visible={modal} setVisible={setModal}>
                 <PostForm create={createPost}/>
             </MyModal>
