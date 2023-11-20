@@ -8,20 +8,21 @@ import MyButton from './components/UI/button/MyButton';
 import {usePosts} from './hooks/usePosts'
 import PostService from './API/PostService';
 import Loader from './components/UI/Loader/Loader';
+import { useFetching } from './hooks/useFetching';
 
 function App () {
     const [posts, setPosts] = useState([]) 
     const [modal, setModal]= useState(false)
     const [filter,setFilter]= useState({sort:'', query:''})
     const sortedAndSearchedPosts= usePosts(posts, filter.sort, filter.query)
-    const [isPostsLoading, setIsPostsLoading] = useState(true)
+    const [fetchPosts, isPostsLoading ,postError] = useFetching (async () => {
+        const posts = await PostService.getAll();
+        setPosts(posts)
+    })
 
    
     useEffect(() => {
-        fetchPosts().then(()=>{
-            setIsPostsLoading(false);
-        })
-   
+        fetchPosts()
     }, [])
 
     
@@ -30,10 +31,10 @@ function App () {
         setModal(false)
     }
 
-    async function fetchPosts(){
-        const posts = await PostService.getAll();
-        setPosts(posts)
-    }
+    // async function fetchPosts(){
+    //     const posts = await PostService.getAll();
+    //     setPosts(posts)
+    // }
 
 
     const removePost=(post)=>{
@@ -41,7 +42,6 @@ function App () {
         
     }
 
-    
 
     return (
         <div className="App">   
@@ -50,7 +50,7 @@ function App () {
             <MyButton style={{marginTop:30}} onClick={()=>setModal(true)}>
                     Создать пользователя
             </MyButton>
-            
+
             <MyModal visible={modal} setVisible={setModal}>
                 <PostForm create={createPost}/>
             </MyModal>
