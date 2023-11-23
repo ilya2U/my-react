@@ -56,6 +56,9 @@ function App () {
             </MyModal>
             <hr style={{margin:'15px 0'}} />
             <PostFilter filter={filter} setFilter={setFilter}/>
+
+            {postError && <h1>Ошибка</h1>}
+
             {isPostsLoading
              ? <div style={{display:'flex', justifyContent:'center', marginTop:'10px' }}><Loader/></div>
              :<PostList remove={removePost} posts={sortedAndSearchedPosts} title="Посты про JS"/>}
