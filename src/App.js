@@ -9,15 +9,24 @@ import {usePosts} from './hooks/usePosts'
 import PostService from './API/PostService';
 import Loader from './components/UI/Loader/Loader';
 import { useFetching } from './hooks/useFetching';
+import { getPageCount, getPagesArray} from './components/utils/pages';
 
 function App () {
     const [posts, setPosts] = useState([]) 
     const [modal, setModal]= useState(false)
     const [filter,setFilter]= useState({sort:'', query:''})
     const sortedAndSearchedPosts= usePosts(posts, filter.sort, filter.query)
+    const [totalPages, setTotalPages] = useState(0);
+    const [limit, setLimit] = useState(10);
+    const [page, setPage] = useState(1);
+
+    let pagesArray = getPagesArray(totalPages)
+
     const [fetchPosts, isPostsLoading ,postError] = useFetching (async () => {
-        const posts = await PostService.getAll();
-        setPosts(posts)
+        const response = await PostService.getAll(limit,page);
+        setPosts(response.data)
+        const totalCount= response.headers['x-total-count'];
+        setTotalPages(getPageCount(totalCount,limit))
     })
 
    
@@ -30,11 +39,6 @@ function App () {
         setPosts([...posts, newPost])
         setModal(false)
     }
-
-    // async function fetchPosts(){
-    //     const posts = await PostService.getAll();
-    //     setPosts(posts)
-    // }
 
 
     const removePost=(post)=>{
@@ -63,6 +67,10 @@ function App () {
              ? <div style={{display:'flex', justifyContent:'center', marginTop:'10px' }}><Loader/></div>
              :<PostList remove={removePost} posts={sortedAndSearchedPosts} title="Посты про JS"/>}
             
+            <div className='page__wrapper'>
+                 {pagesArray.map(p => <span className='page'>{p}</span>)}
+            </div>
+           
         </div>
     );
 }
