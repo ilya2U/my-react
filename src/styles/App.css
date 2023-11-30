@@ -50,3 +50,16 @@
     border:2px solid rgb(7, 174, 174);
     background-color: rgb(7, 174, 174);
 }
+
+.navbar{
+    height: 50px;
+    width: 100vw;
+    display: flex;
+    align-items:center;
+    padding: 0 15px;
+    background: lightgrey;
+}
+
+.navbar__links {
+    margin-left: auto;
+}
