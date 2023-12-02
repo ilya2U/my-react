@@ -25,6 +25,7 @@
 
 .post__btns {
     display: flex;
+    flex-direction: column;
 }
 
 
@@ -43,8 +44,12 @@
     border-radius: 35%;
     width: 38px;
     text-align: center;
-    
 }
+
+.page:hover {
+    border: 2px solid teal;
+}
+
 
 .page__current {
     border:2px solid rgb(7, 174, 174);
@@ -57,9 +62,26 @@
     display: flex;
     align-items:center;
     padding: 0 15px;
-    background: rgb(114, 224, 201);
+    background: rgb(114, 224, 201); 
+   
+}
+
+.navbar a{
+     margin-right: 5px;
 }
 
 .navbar__links {
     margin: auto;
+   
 }
+
+.comm{
+    border: 2px solid teal;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.comm span {
+    display: block;
+  }
+  

@@ -17,7 +17,7 @@ const PostItem = (props) => {
                 <MyButton onClick={() => navigate(`/posts/${props.post.id}`) }>
                     Открыть
                 </MyButton>
-                <MyButton onClick={() => props.remove(props.post)}>
+                <MyButton style={{marginTop: -1}} onClick={() => props.remove(props.post)}>
                     Удалить
                 </MyButton>
             </div>

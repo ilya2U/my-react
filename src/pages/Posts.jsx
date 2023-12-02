@@ -69,7 +69,7 @@ function Posts () {
 
             {isPostsLoading
              ? <div style={{display:'flex', justifyContent:'center', marginTop:'10px' }}><Loader/></div>
-             :<PostList remove={removePost} posts={sortedAndSearchedPosts} title="Посты про JS"/>}
+             :<PostList remove={removePost} posts={sortedAndSearchedPosts} title="Посты"/>}
 
             <Pagination page={page} changePage={changePage} totalPages={totalPages}/>
         </div>
