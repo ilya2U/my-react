@@ -1,16 +1,22 @@
 import React from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
-import About from '../pages/About'
-import Posts from '../pages/Posts'
-import PostIdPage from '../pages/PostIdPage'
+import { routes } from '../router'
 
 export const AppRouter = () => {
   return (
     <Routes>
-    <Route path="/about" element={<About/>} />
-    <Route exact path="/posts"  element={<Posts/>} />
-    <Route path="*"      element={<Navigate to="/posts"/>}/>
-    <Route exact path="/posts/:id"  element={<PostIdPage/>} />
-  </Routes>
+      {routes.map(route => (
+        <Route 
+          key={route.path} //ASKkkkkkkkkkkkk
+          path={route.path}
+          element={<route.component />}
+        />
+      ))}
+      <Route path="*" element={<Navigate to="/posts"/>}/>
+   </Routes>
   )
 }
+
+
+
+//<Route path="/posts"  element={<Posts/>} />

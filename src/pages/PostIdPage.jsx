@@ -34,8 +34,8 @@ const PostIdPage = () => {
         <h3 style={{color:'teal'}} >Комментарии</h3>
         {isComLoading
             ? <Loader/>
-            : <div> {
-                comments.map(comm => <div className='comm'> <span>{comm.email}</span> <span>{comm.body}</span> </div>)
+            : <div className='comm'> {
+                comments.map(comm => <div className='col'> <span>{comm.email}</span> <span>{comm.body}</span></div>)
                 }
              </div>
         }
