@@ -19,4 +19,3 @@ export const publicRoutes = [
 ]
 
 
-{path: '/login', component: Login},
