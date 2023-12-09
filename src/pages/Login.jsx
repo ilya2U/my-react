@@ -4,7 +4,7 @@ import MyButton from '../components/UI/button/MyButton'
 
 const Login = () => {
   return (
-    <div>
+    <div style={{marginTop:15}}>
         <h1>Страница для логина</h1>
         <form >
             <MyInput type="text" placeholder="Введите логин" />

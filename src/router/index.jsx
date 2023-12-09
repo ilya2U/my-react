@@ -12,10 +12,7 @@ export const privateRoutes = [
 
 
 export const publicRoutes = [
-    {path: '/login', component: Login},
-    {path: '/about', component: About},
-    {path: '/posts', component: Posts},
-    {path: '/posts/:id', component: PostIdPage}
+    {path: '/login', component: Login}
 ]
 
 
