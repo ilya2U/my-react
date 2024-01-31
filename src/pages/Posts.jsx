@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import '../styles/App.css';
 import PostForm from '../components/PostForm';
 import PostList from '../components/PostList';
@@ -20,7 +20,8 @@ function Posts () {
     const [totalPages, setTotalPages] = useState(0);
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(1);
-
+    const lastElement = useRef()
+    const observer = useRef()
 
     const [fetchPosts, isPostsLoading ,postError] = useFetching(async (limit,page) => {
         const response = await PostService.getAll(limit,page);
@@ -29,10 +30,26 @@ function Posts () {
         setTotalPages(getPageCount(totalCount,limit))
     })
 
+    useEffect(() => {
+       if(isPostsLoading) return;
+       if (observer.current) observer.current.disconnect();
+        // Определение функции обратного вызова
+        var callback = function (entries, observer) {
+            if (entries[0].isIntersecting && page < totalPages) {
+                console.log(page);
+                setPage(page + 1)
+            }
+        };
+        // Создание IntersectionObserver и наблюдение за элементом
+        observer.current = new IntersectionObserver(callback);
+        observer.current.observe(lastElement.current);
+    
+    }, [isPostsLoading]);
+    
    
     useEffect(() => {
         fetchPosts(limit,page)
-    }, [])
+    }, [page])
 
     
     const createPost = (newPost) => {
@@ -48,7 +65,6 @@ function Posts () {
 
     const changePage = (page) => {
         setPage(page)
-        fetchPosts(limit,page)
     }
 
     return (
@@ -68,6 +84,7 @@ function Posts () {
             {postError && <h1>Ошибка</h1>}
 
             <PostList remove={removePost} posts={sortedAndSearchedPosts} title="Посты"/>
+            <div ref={lastElement} style={{height: 20, background: 'red'}}></div>
 
             {isPostsLoading &&  <div style={{display:'flex', justifyContent:'center', marginTop:'10px' }}><Loader/></div> }
              
